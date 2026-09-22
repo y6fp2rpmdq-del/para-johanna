@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi novia, Johanna?</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins & Great Vibes for romantic touch -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti for celebration effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .romantic-font {
+            font-family: 'Great Vibes', cursive;
+        }
+        /* Floating background hearts animation */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        .heart-float {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(244, 114, 182, 0.4);
+            animation: float 8s linear infinite;
+        }
+        /* Custom card glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-rose-100 to-amber-50 min-h-screen text-gray-800 relative overflow-x-hidden flex flex-col justify-between select-none">
+
+    <!-- Fondo de corazones flotantes -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none z-0" id="hearts-container">
+        <!-- Generados por JS -->
+    </div>
+
+    <!-- Pantalla 1: Bienvenida -->
+    <div id="screen-welcome" class="relative z-10 flex flex-col items-center justify-center min-h-screen p-6 text-center transition-opacity duration-700">
+        <div class="glass-card shadow-2xl rounded-3xl p-8 md:p-12 max-w-lg w-full transform hover:scale-[1.01] transition-transform">
+            <div class="text-rose-500 text-6xl mb-4 animate-bounce">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <span class="text-rose-600 font-semibold uppercase tracking-widest text-xs bg-rose-100 px-3 py-1 rounded-full">Una sorpresa especial</span>
+            <h1 class="romantic-font text-5xl md:text-6xl text-rose-600 mt-4 mb-3">Para Johanna</h1>
+            <p class="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
+                He preparado algo muy especial solo para ti. Desliza hacia abajo o presiona el botón para descubrir lo que mi corazón quiere decirte hoy.
+            </p>
+            <button onclick="goToReasons()" class="w-full bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-medium py-4 px-8 rounded-2xl shadow-lg shadow-rose-300 transform active:scale-95 transition-all flex items-center justify-center space-x-3 text-lg">
+                <span>Abrir mi cartita</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+        <footer class="mt-8 text-xs text-rose-400 font-medium">Hecho con todo mi amor para ti ✨</footer>
+    </div>
+
+    <!-- Pantalla 2: Razones por las que eres especial (Oculta al inicio) -->
+    <div id="screen-reasons" class="hidden relative z-10 flex flex-col items-center justify-center min-h-screen p-6 transition-opacity duration-700">
+        <div class="max-w-2xl w-full">
+            <div class="text-center mb-6">
+                <span class="text-rose-500 font-semibold uppercase tracking-widest text-xs bg-rose-100 px-3 py-1 rounded-full">Razones por las que te amo</span>
+                <h2 class="romantic-font text-4xl md:text-5xl text-rose-600 mt-2">Por qué eres única, Johanna</h2>
+            </div>
+
+            <!-- Tarjetas Carrusel / Grid Dinámico -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div class="glass-card p-6 rounded-2xl shadow-md border border-rose-100 flex items-start space-x-4">
+                    <div class="bg-rose-500 text-white p-3 rounded-xl shadow-md text-xl flex-shrink-0">
+                        <i class="fa-solid fa-smile-beam"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800 text-lg">Tu hermosa sonrisa</h3>
+                        <p class="text-gray-600 text-sm mt-1">Tienes el poder de iluminar incluso mis días más grises con solo una sonrisa.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl shadow-md border border-rose-100 flex items-start space-x-4">
+                    <div class="bg-rose-500 text-white p-3 rounded-xl shadow-md text-xl flex-shrink-0">
+                        <i class="fa-solid fa-face-laugh-wink"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800 text-lg">Tu forma de ser</h3>
+                        <p class="text-gray-600 text-sm mt-1">Tu inteligencia, tu ternura y esa chispa única que te hace tan especial y maravillosa.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl shadow-md border border-rose-100 flex items-start space-x-4">
+                    <div class="bg-rose-500 text-white p-3 rounded-xl shadow-md text-xl flex-shrink-0">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800 text-lg">Me haces mejor persona</h3>
+                        <p class="text-gray-600 text-sm mt-1">Estar a tu lado me inspira a dar lo mejor de mí todos los días y soñar en grande.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl shadow-md border border-rose-100 flex items-start space-x-4">
+                    <div class="bg-rose-500 text-white p-3 rounded-xl shadow-md text-xl flex-shrink-0">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-800 text-lg">Cada momento contigo</h3>
+                        <p class="text-gray-600 text-sm mt-1">Cada segundo a tu lado se convierte en mi momento favorito del día.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="goToQuestion()" class="bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-medium py-4 px-10 rounded-2xl shadow-lg shadow-rose-300 transform active:scale-95 transition-all text-lg inline-flex items-center space-x-3">
+                    <span>Continuar</span>
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla 3: La Gran Pregunta -->
+    <div id="screen-question" class="hidden relative z-10 flex flex-col items-center justify-center min-h-screen p-6 text-center transition-opacity duration-700">
+        <div class="glass-card shadow-2xl rounded-3xl p-8 md:p-12 max-w-lg w-full relative overflow-hidden">
+            <div class="text-rose-500 text-6xl mb-4">
+                <i class="fa-solid fa-ring animate-pulse"></i>
+            </div>
+            <span class="text-rose-600 font-semibold uppercase tracking-widest text-xs bg-rose-100 px-3 py-1 rounded-full">La pregunta más importante</span>
+            <h2 class="romantic-font text-5xl md:text-6xl text-rose-600 mt-4 mb-4">Johanna...</h2>
+            <p class="text-xl md:text-2xl font-semibold text-gray-800 mb-8">
+                ¿Quieres hacerme el hombre más feliz del mundo y ser mi novia? ❤️
+            </p>
+
+            <!-- Botones Interactivos -->
+            <div id="buttons-container" class="flex flex-col sm:flex-row items-center justify-center gap-4 relative min-h-[80px]">
+                <button onclick="sayYes()" id="btn-yes" class="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-2xl shadow-lg shadow-emerald-200 transform hover:scale-110 active:scale-95 transition-all text-lg z-20">
+                    <i class="fa-solid fa-check mr-2"></i> ¡Sí, sí quiero!
+                </button>
+                <button id="btn-no" onmouseover="moveNoButton()" ontouchstart="moveNoButton()" onclick="moveNoButton()" class="w-full sm:w-auto bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-4 px-10 rounded-2xl transition-all text-lg absolute sm:static z-10">
+                    No 😢
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla 4: Celebración (Oculta al inicio) -->
+    <div id="screen-success" class="hidden relative z-10 flex flex-col items-center justify-center min-h-screen p-6 text-center transition-opacity duration-700">
+        <div class="glass-card shadow-2xl rounded-3xl p-8 md:p-12 max-w-lg w-full">
+            <div class="text-rose-500 text-7xl mb-4 animate-bounce">
+                <i class="fa-solid fa-heart-circle-check"></i>
+            </div>
+            <span class="text-rose-600 font-semibold uppercase tracking-widest text-xs bg-rose-100 px-3 py-1 rounded-full">¡Has dicho que sí!</span>
+            <h2 class="romantic-font text-5xl md:text-6xl text-rose-600 mt-4 mb-4">¡Sabía que dirías que sí!</h2>
+            <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-6">
+                Has hecho que este sea el día más feliz de mi vida, Johanna. Prometo cuidarte, hacerte sonreír y darte todo mi amor cada día. 💖✨
+            </p>
+            <div class="bg-rose-50 border border-rose-200 p-4 rounded-2xl text-rose-600 font-medium text-sm">
+                ¡Nuestra historia de amor oficial comienza ahora! 🌹
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Interactividad y Animaciones -->
+    <script>
+        // Generar corazones flotantes dinámicos en el fondo
+        function createFloatingHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartIcons = ['fa-heart', 'fa-solid fa-heart', 'fa-regular fa-heart'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-float';
+                heart.innerHTML = '<i class="fa-solid fa-heart"></i>';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                heart.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', createFloatingHearts);
+
+        // Transición de Pantalla 1 a Pantalla 2
+        function goToReasons() {
+            const screenWelcome = document.getElementById('screen-welcome');
+            const screenReasons = document.getElementById('screen-reasons');
+            
+            screenWelcome.style.opacity = '0';
+            setTimeout(() => {
+                screenWelcome.classList.add('hidden');
+                screenReasons.classList.remove('hidden');
+                screenReasons.style.opacity = '0';
+                setTimeout(() => {
+                    screenReasons.style.opacity = '1';
+                }, 50);
+            }, 500);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Transición de Pantalla 2 a Pantalla 3
+        function goToQuestion() {
+            const screenReasons = document.getElementById('screen-reasons');
+            const screenQuestion = document.getElementById('screen-question');
+            
+            screenReasons.style.opacity = '0';
+            setTimeout(() => {
+                screenReasons.classList.add('hidden');
+                screenQuestion.classList.remove('hidden');
+                screenQuestion.style.opacity = '0';
+                setTimeout(() => {
+                    screenQuestion.style.opacity = '1';
+                }, 50);
+            }, 500);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Lógica del botón "No" que huye
+        let moveCount = 0;
+        function moveNoButton() {
+            const btnNo = document.getElementById('btn-no');
+            const container = document.getElementById('buttons-container');
+            
+            // Hacer que el botón sea absolutamente posicionable dentro del contenedor si no lo es
+            btnNo.style.position = 'absolute';
+            
+            // Calcular límites aleatorios seguros dentro de la ventana o contenedor
+            const maxX = window.innerWidth < 640 ? 150 : 250;
+            const maxY = 120;
+            
+            const randomX = (Math.random() - 0.5) * maxX;
+            const randomY = (Math.random() - 0.5) * maxY;
+            
+            btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            
+            moveCount++;
+            if (moveCount > 4) {
+                // Cambiar el texto del botón No de forma divertida después de varios intentos
+                const messages = [, "Piénsalo bien...", "¿Segura?", "¡Imposible darle!", "¡Dale al verde!"];
+                btnNo.innerText = messages[Math.floor(Math.random() * messages.length)];
+            }
+        }
+
+        // Lógica al presionar "Sí" (Celebración con confeti masivo)
+        function sayYes() {
+            const screenQuestion = document.getElementById('screen-question');
+            const screenSuccess = document.getElementById('screen-success');
+
+            // Lanzar confeti estelar
+            var duration = 4 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                // Confeti de colores románticos (rosas, rojos, dorados)
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#ff4d6d', '#ff758c', '#ffb703', '#ffffff'] }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#ff4d6d', '#ff758c', '#ffb703', '#ffffff'] }));
+            }, 250);
+
+            // Cambiar de pantalla
+            screenQuestion.style.opacity = '0';
+            setTimeout(() => {
+                screenQuestion.classList.add('hidden');
+                screenSuccess.classList.remove('hidden');
+                screenSuccess.style.opacity = '0';
+                setTimeout(() => {
+                    screenSuccess.style.opacity = '1';
+                }, 50);
+            }, 500);
+            window.scrollTo({ top: { behavior: 'smooth' } });
+        }
+    </script>
+</body>
+</html>
